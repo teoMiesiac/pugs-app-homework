@@ -1,7 +1,10 @@
-import { Flex, Button, ButtonGroup } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { Flex, Button, ButtonGroup, Spinner } from '@chakra-ui/react'
+import { observer } from 'mobx-react-lite'
 import { useHistory } from 'react-router-dom'
 import { MainLayout } from 'layouts/MainLayout'
 import { PictureCard } from 'components/PictureCard'
+import { useDataStore } from 'store/hooks'
 
 const picture = {
   copyright: 'T. A. Rector',
@@ -15,8 +18,15 @@ const picture = {
   url: 'https://apod.nasa.gov/apod/image/0305/coneregion_noao.jpg',
 }
 
-const Landing = (): JSX.Element => {
+const Landing = observer((): JSX.Element => {
   const history = useHistory()
+  const {
+    ApodStore: { apod, loading, getApod, saveApod },
+  } = useDataStore()
+
+  useEffect(() => {
+    getApod()
+  }, [])
 
   const onGalleryClick = (): void => {
     history.push('/saved')
@@ -29,19 +39,27 @@ const Landing = (): JSX.Element => {
         width="100%"
         direction="column"
         alignItems="center"
-        justifyContent="center"
+        justifyContent="flex-start"
         height="100%"
         padding={5}
       >
-        <PictureCard picture={picture} />
-        <ButtonGroup colorScheme="teal" size="lg" marginTop="30px">
+        <ButtonGroup colorScheme="teal" size="lg" margin="30px 0">
           <Button onClick={onGalleryClick}>Gallery</Button>
-          <Button>Save</Button>
-          <Button>Next</Button>
+          <Button disabled={loading} onClick={saveApod}>
+            Save
+          </Button>
+          <Button onClick={getApod} disabled={loading}>
+            Next
+          </Button>
         </ButtonGroup>
+        {loading || picture.title === undefined ? (
+          <Spinner color="teal.500" size="xl" />
+        ) : (
+          <PictureCard picture={apod} />
+        )}
       </Flex>
     </MainLayout>
   )
-}
+})
 
 export default Landing
