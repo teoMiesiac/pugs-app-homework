@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, Image } from '@chakra-ui/react'
+import { Flex, Heading, Text, Image } from '@chakra-ui/react'
 import { Apod } from 'models'
 
 interface Props {

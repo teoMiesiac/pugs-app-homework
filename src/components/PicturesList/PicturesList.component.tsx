@@ -11,7 +11,7 @@ const PicturesList = observer((): JSX.Element => {
 
   useEffect(() => {
     updateApods()
-  }, [])
+  }, [updateApods])
 
   return (
     <SimpleGrid minChildWidth="150px" width="100%" gap="40px" justifyContent="center" alignItems="center">

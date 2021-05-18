@@ -25,7 +25,7 @@ class ApodStore {
     this.apods = this.localStorageService.getApods()
   }
 
-  getApod = async () => {
+  getApod = async (): Promise<void> => {
     runInAction(() => {
       this.loading = true
     })

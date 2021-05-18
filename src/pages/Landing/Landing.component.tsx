@@ -26,7 +26,7 @@ const Landing = observer((): JSX.Element => {
 
   useEffect(() => {
     getApod()
-  }, [])
+  }, [getApod])
 
   const onGalleryClick = (): void => {
     history.push('/saved')

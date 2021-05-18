@@ -7,10 +7,8 @@ export interface GetParams {
   page: number
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-
 export class NasaService {
   instance = axios.create({ baseURL: URL })
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   getApod = async (): Promise<any> => await this.instance.get('apod', { params: { api_key, count: 1 } })
 }
