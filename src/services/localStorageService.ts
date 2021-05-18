@@ -8,7 +8,9 @@ export class LocalStorageService {
 
   saveApod = (apod: Apod): void => {
     const apods = this.getApods()
-    apods.push(apod)
+    if (!apods.find((savedApod) => savedApod.title === apod.title)) {
+      apods.push(apod)
+    }
     window.localStorage.setItem('apods', JSON.stringify(apods))
   }
 
